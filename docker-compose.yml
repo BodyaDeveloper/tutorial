@@ -1,0 +1,22 @@
+version: "3"
+services:
+  mongo:
+    container_name: mongo_container
+    image: mongo:5.0.14
+    restart: always
+    volumes:
+      - mongo:/data/db
+    ports:
+      - 2717:27017
+  test-api:
+    build: .
+    ports:
+      - 3000:2020
+    environment:
+      MONGODB_URI: mongodb://mongo:27017
+      DB_NAME: tutorial-db
+    depends_on:
+      - mongo
+
+volumes:
+  mongo: {}
