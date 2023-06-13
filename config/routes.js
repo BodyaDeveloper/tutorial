@@ -24,7 +24,10 @@ module.exports.routes = {
   "get /api/users/getList": "users/UserController.getUsers",
   "get /api/users/getUser": "users/UserController.getUserByEmail",
   "get /api/list/getLists": "list/ListController.getLists",
-  "get /api/list/getList": "list/ListController.getListByStatus"
+  "get /api/list/getList": "list/ListController.getListByStatus",
+  "get /api/todos/get": "list/ListController.getList"
+
+
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *
