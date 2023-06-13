@@ -16,29 +16,62 @@ module.exports = {
 
   },
 
-  getLists: async(req,res) => {
+//   getLists: async(req,res) => {
+//     let pageNum = req.param('pageNum') || 1;
+//     let limit = req.param('limit') || 10;
+//     let total = await ToDoList.count();
+//     let lists = await ToDoList.find({
+//       limit: limit,
+//       skip: (pageNum - 1) * limit,
+//     });
+//     return res.json({
+//       ToDoLists: lists,
+//       total: total,
+//     });
+// },
+
+
+  getList: async ( req, res ) => {
+    let status = req.param('status');
+    let priority = req.param('priority');
+    let color = req.param('color');
     let pageNum = req.param('pageNum') || 1;
     let limit = req.param('limit') || 10;
-    let total = await ToDoList.count();
-    let lists = await User.find({
-      limit: limit,
-      skip: (pageNum - 1) * limit,
+    let todosList = await ToDoList.find({
+      status: status,
+      priority: priority,
+      color: color,
     });
-    return res.json({
-      usersList: lists,
-      total: total,
-    });
-},
+    // let total = await ToDoList.count();
+    // let lists = await ToDoList.find({
+    //   limit: limit,
+    //   skip: (pageNum - 1) * limit,
+    // });
+    // return res.json({
+    //   ToDoLists: lists,
+    //   total: total,
+    // });
 
-  getListByStatus: async(req,res) =>{
-  const statusSearch = req.param('list');
-  if(!statusSearch)
-    return res.status(422).send('Bad data');
-  let list = await ToDoList.findone({
-    status:statusSearch
-  });
-    if(!list)
-      return res.status(404).send('Missing data');
-    return res.json(list);
+    console.log(req.allParams())
+    return res.json(todosList);
+    // let todosList = await ToDoList.find({
+    //   status: status,
+    //   priority: priority,
+    //   color: color,
+    // });
   }
+
+
+  // getListByStatus: async(req,res) =>{
+  // const statusSearch = req.param('status');
+  // if(!statusSearch)
+  //   return res.status(422).send('Bad data');
+  // let list = await ToDoList.find({
+  //   status:statusSearch
+  // });
+  //   if(!list)
+  //     return res.status(404).send('Missing data');
+  //   return res.json(list);
+  // }
 }
+
