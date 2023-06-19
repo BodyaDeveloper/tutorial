@@ -41,37 +41,37 @@ module.exports = {
       status: status,
       priority: priority,
       color: color,
+    }).limit(limit).skip((pageNum - 1) * limit);
+    let total = await ToDoList.count({
+      status: status,
+      priority: priority,
+      color: color,
     });
-    // let total = await ToDoList.count();
-    // let lists = await ToDoList.find({
-    //   limit: limit,
-    //   skip: (pageNum - 1) * limit,
-    // });
-    // return res.json({
-    //   ToDoLists: lists,
-    //   total: total,
-    // });
 
     console.log(req.allParams())
-    return res.json(todosList);
-    // let todosList = await ToDoList.find({
-    //   status: status,
-    //   priority: priority,
-    //   color: color,
-    // });
+    return res.json({
+      todosList: todosList,
+      totalRecords:total,
+    });
+  },
+
+  updateList: async (req, res) => {
+    let receivedTask = req.param("task");
+    let receivedStatus = req.param("status");
+    let receivedPriority = req.param("priority");
+    let receivedColor = req.param("color");
+    let updatedLists = await ToDoList.update({
+      task: receivedTask,
+      status: receivedStatus,
+      priority: receivedPriority,
+      color:receivedColor,
+    })
+      .set({
+        task: receivedTask,
+        status: receivedStatus,
+        priority: receivedPriority,
+        color:receivedColor,
+      });
   }
-
-
-  // getListByStatus: async(req,res) =>{
-  // const statusSearch = req.param('status');
-  // if(!statusSearch)
-  //   return res.status(422).send('Bad data');
-  // let list = await ToDoList.find({
-  //   status:statusSearch
-  // });
-  //   if(!list)
-  //     return res.status(404).send('Missing data');
-  //   return res.json(list);
-  // }
 }
 
